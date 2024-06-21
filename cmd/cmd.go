@@ -1,9 +1,13 @@
 package cmd
 
-import "gotemplate/config"
+import (
+	"gotemplate/config"
+	"gotemplate/routers"
+)
 
 func Start() {
 	config.InitConfig()
+	routers.InitRouter()
 }
 
 func Clear() {
