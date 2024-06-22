@@ -3,17 +3,21 @@ package routers
 import (
 	"context"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"gotemplate/config"
-	"log"
 	"net/http"
 	"os/signal"
 	"syscall"
 	"time"
 )
 
-import (
-	"github.com/gin-gonic/gin"
-) // rgPublic: 不需要鉴权， rgAuth: 需要鉴权,携带token
+/**
+ * @title: logger
+ * @description:
+ * @author: congmu
+ * @date:    2024/6/22 20:01
+ * @version: 1.0
+ */
 
 // rgPublic: 不需要鉴权， rgAuth: 需要鉴权,携带token
 type IFnRegistRoute = func(rgPublic *gin.RouterGroup, rgAuth *gin.RouterGroup)
@@ -21,6 +25,7 @@ type IFnRegistRoute = func(rgPublic *gin.RouterGroup, rgAuth *gin.RouterGroup)
 // 定义一个切片存储所有路由
 var (
 	gfnRoutes []IFnRegistRoute
+	Logger    = config.GlobalLogger
 )
 
 // 注册路由，向切片中添加路由
@@ -62,12 +67,12 @@ func InitRouter() {
 	}
 
 	// 在启动监听前先打印启动日志，并加入短暂延迟
-	log.Printf("Starting server on port %s...\n", stPort)
+	Logger.Info("Starting server on port %s...\n", stPort)
 	time.Sleep(100 * time.Millisecond) // 短暂延迟，给日志打印机会
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("Start server listen error: %s\n", err.Error())
+			Logger.Error("Start server listen error: %s\n", err.Error())
 		}
 	}()
 
@@ -77,7 +82,7 @@ func InitRouter() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal("Server forced to shutdown: ", err.Error())
+		Logger.Error("Server shutdown error: %s\n", err.Error())
 		return
 	}
 }

@@ -2,15 +2,23 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"gotemplate/api"
+	"gotemplate/controller"
 	"net/http"
 )
+
+/**
+ * @title: logger
+ * @description:
+ * @author: congmu
+ * @date:    2024/6/22 20:01
+ * @version: 1.0
+ */
 
 func InitUserRoutes() {
 	RegistRoute(func(rgPublic *gin.RouterGroup, rgAuth *gin.RouterGroup) {
 		userGroup := rgPublic.Group("user")
 		{
-			userGroup.POST("/login", api.GetUserApi().Login)
+			userGroup.POST("/login", controller.GetUserController().Login)
 		}
 
 		rgAuthUser := rgAuth.Group("user")

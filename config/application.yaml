@@ -1,3 +1,6 @@
+server:
+  port: 8088
+
 mysql:
   url: 127.0.0.1
   username: root
@@ -5,5 +8,12 @@ mysql:
   dbname: user
   port: 3306
 
-server:
-  port: 8088
+logger:
+  maxAge: 30
+  maxSize: 10
+  maxBackups: 10
+  level: debug
+  # 默认是当前工作的目录下的`/log/`文件夹，linux也同理
+  path:
+  # 是否需要生成日志文件
+  generateFile: true

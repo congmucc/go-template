@@ -1,4 +1,4 @@
-package api
+package controller
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,21 +7,21 @@ import (
 )
 
 /**
- * @title: userApi
+ * @title: userController
  * @description:
  * @author: congmu
  * @date:    2024/6/22 19:03
  * @version: 1.0
  */
 
-type UserApi struct {
+type UserController struct {
 }
 
-func GetUserApi() UserApi {
-	return UserApi{}
+func GetUserController() UserController {
+	return UserController{}
 }
 
-func (userApi UserApi) Login(ctx *gin.Context) {
+func (userController UserController) Login(ctx *gin.Context) {
 	var userDto dto.UserDto
 	if err := ctx.ShouldBindJSON(&userDto); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
