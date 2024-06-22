@@ -3,6 +3,7 @@ package cmd
 import (
 	"gotemplate/config"
 	"gotemplate/routers"
+	"log"
 )
 
 func Start() {
@@ -11,5 +12,5 @@ func Start() {
 }
 
 func Clear() {
-
+	log.Println("Server exiting")
 }

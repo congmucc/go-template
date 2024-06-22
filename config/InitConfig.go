@@ -22,6 +22,7 @@ type Config struct {
 	Mysql  MysqlConfig
 }
 
+// 存储配置文件全局变量，防止频繁读取配置文件
 var GlobalConfig Config
 
 func InitConfig() {
@@ -37,6 +38,10 @@ func InitConfig() {
 	// 将配置文件内容解析到结构体中
 	var config Config
 	err := viper.Unmarshal(&config)
+	/**
+	 * 这里还可以使用key value读取配置文件
+	 * viper.GetString("server.port")
+	 */
 	if err != nil {
 		panic(fmt.Sprint("Unable to decode into struct: %s", err.Error()))
 	}
