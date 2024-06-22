@@ -11,7 +11,7 @@ import (
 )
 
 func getMysqlConfig() config.MysqlConfig {
-	return config.InitConfig().Mysql
+	return config.GlobalConfig.Mysql
 }
 
 var DB *gorm.DB

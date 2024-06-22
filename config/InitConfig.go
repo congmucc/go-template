@@ -22,7 +22,9 @@ type Config struct {
 	Mysql  MysqlConfig
 }
 
-func InitConfig() Config {
+var GlobalConfig Config
+
+func InitConfig() {
 	// 设置配置文件的名字
 	viper.SetConfigName("application")
 	// 设置配置文件的类型
@@ -38,5 +40,5 @@ func InitConfig() Config {
 	if err != nil {
 		panic(fmt.Sprint("Unable to decode into struct: %s", err.Error()))
 	}
-	return config
+	GlobalConfig = config
 }

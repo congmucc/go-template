@@ -40,7 +40,7 @@ func InitRouter() {
 	}
 
 	// 对端口进行监听
-	stPort := config.InitConfig().Server.Port
+	stPort := config.GlobalConfig.Server.Port
 	if stPort == "" {
 		panic(fmt.Sprint("Load Router Port Error"))
 	}
