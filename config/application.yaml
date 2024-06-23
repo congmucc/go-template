@@ -21,3 +21,12 @@ logger:
   path:
   # 是否需要压缩
   compress: false
+
+redis:
+  url: localhost:6379
+  password: 123456
+  DB: 0
+
+jwt:
+  tokenExpire: 30 # token过期时间，单位：分钟
+  secretKey: 123456

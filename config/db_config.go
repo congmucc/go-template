@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"gotemplate/utils"
+	error2 "gotemplate/utils/error"
 	"log"
 	"os"
 	"time"
@@ -21,13 +21,8 @@ import (
  * @version: 1.0
  */
 
-var (
-	DB      *gorm.DB
-	zLogger = GlobalLogger
-)
-
 // 不需要手动关闭，因为gorm会自动关闭
-func InitDB() {
+func InitDB() *gorm.DB {
 	logLevel := logger.Info
 	if viper.GetString("profiles.active") == "dev" {
 		logLevel = logger.Info
@@ -43,7 +38,7 @@ func InitDB() {
 
 	var err error
 	dsn := ToDSN(GlobalConfig.Mysql)
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+	DB, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: newLogger,
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix:   "sys_", // 表名前缀，`User`表为 `sys_user`
@@ -51,14 +46,17 @@ func InitDB() {
 		},
 	})
 	if err != nil {
-		utils.AppendError(nil, err)
+		initErr = error2.AppendError(initErr, err)
 		zLogger.Errorf("Load Mysql configation Error: %s", err.Error())
 	}
 
+	// 初始化连接池
 	sqlDB, _ := DB.DB()
 	sqlDB.SetMaxIdleConns(GlobalConfig.Mysql.MaxIdleConns)
 	sqlDB.SetMaxOpenConns(GlobalConfig.Mysql.MaxOpenConns)
 	sqlDB.SetConnMaxLifetime(time.Hour)
+
+	return DB
 }
 
 // 数据库迁移

@@ -1,4 +1,4 @@
-package log
+package test
 
 import (
 	"gotemplate/config"
@@ -13,9 +13,9 @@ import (
  * @version: 1.0
  */
 
-var logger = config.GlobalLogger
+var zLogger = config.GlobalLogger
 
 // 这只是测试如何使用，以及输出日志结构，这个log包整个可以删除
 func TestInitLogger(t *testing.T) {
-	logger.Error("出错了")
+	zLogger.Error("出错了")
 }

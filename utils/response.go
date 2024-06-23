@@ -5,30 +5,30 @@ const (
 	StatusErr = 1
 )
 
-type Result struct {
+type Response struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
 }
 
-func (res *Result) SuccessWithData(message string, data interface{}) Result {
-	return Result{
+func (res *Response) SuccessWithData(message string, data interface{}) Response {
+	return Response{
 		Code:    StatusOk,
 		Message: message,
 		Data:    data,
 	}
 }
 
-func (res *Result) SuccessWithMessage(message string) Result {
-	return Result{
+func (res *Response) SuccessWithMessage(message string) Response {
+	return Response{
 		Code:    StatusOk,
 		Message: message,
 		Data:    res.Data,
 	}
 }
 
-func (res *Result) ErrorWithMessage(message string) Result {
-	return Result{
+func (res *Response) ErrorWithMessage(message string) Response {
+	return Response{
 		Code:    StatusErr,
 		Message: message,
 		Data:    res.Data,

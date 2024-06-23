@@ -18,20 +18,17 @@ import (
  */
 
 // 从配置文件中获取信息
-var loggerConfig = GlobalConfig.Logger
-
-// GlobalLogger 暴露出来的日志对象
-var GlobalLogger *zap.SugaredLogger
+var loggerConfig = GlobalConfig.ZLogger
 
 // 初始化日志配置
-func InitLogger() {
+func InitLogger() *zap.SugaredLogger {
 	level := zapcore.InfoLevel
 	if loggerConfig.Level == "debug" {
 		level = zapcore.DebugLevel
 	}
 	//core := zapcore.NewCore(getEncoder(), zapcore.NewMultiWriteSyncer(getWriteSyncer(), zapcore.AddSync(os.Stdout)), level)
 	core := zapcore.NewCore(getEncoder(), zapcore.AddSync(os.Stdout), level)
-	GlobalLogger = zap.New(core).Sugar()
+	return zap.New(core).Sugar()
 }
 
 // 对SugaredLogger配置初始化

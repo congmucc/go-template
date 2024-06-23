@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/viper"
 	"path/filepath"
 	"runtime"
+	"time"
 )
 
 /**
@@ -37,16 +38,26 @@ type LoggerConfig struct {
 	compress   bool
 }
 
-type Config struct {
-	Server ServerConfig
-	Mysql  MysqlConfig
-	Logger LoggerConfig
+type RedisConfig struct {
+	Url      string
+	Password string
+	DB       int
 }
 
-// GlobalConfig 存储配置文件全局变量
-var GlobalConfig Config
+type JwtConfig struct {
+	TokenExpire time.Duration
+	SecretKey   string
+}
 
-func InitConfig() {
+type Config struct {
+	Server  ServerConfig
+	Mysql   MysqlConfig
+	ZLogger LoggerConfig
+	Redis   RedisConfig
+	Jwt     JwtConfig
+}
+
+func InitConfig() Config {
 	// 设置配置文件的名字
 	viper.SetConfigName("application")
 	// 设置配置文件的类型
@@ -71,5 +82,5 @@ func InitConfig() {
 	if err != nil {
 		panic(fmt.Sprint("Unable to decode into struct: %s", err.Error()))
 	}
-	GlobalConfig = config
+	return config
 }

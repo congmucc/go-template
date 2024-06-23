@@ -1,4 +1,4 @@
-package utils
+package error
 
 import "fmt"
 
@@ -10,6 +10,7 @@ import "fmt"
  * @version: 1.0
  */
 
+// AppendError 合并错误，构建错误链
 func AppendError(existErr, newErr error) error {
 	if existErr == nil {
 		return newErr
