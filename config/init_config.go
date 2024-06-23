@@ -8,7 +8,7 @@ import (
 )
 
 /**
- * @title: logger
+ * @title: init_config
  * @description:
  * @author: congmu
  * @date:    2024/6/22 20:01
@@ -20,11 +20,13 @@ type ServerConfig struct {
 }
 
 type MysqlConfig struct {
-	Url      string
-	Username string
-	Password string
-	DBName   string
-	Port     string
+	Host         string
+	Username     string
+	Password     string
+	DBName       string
+	Port         string
+	MaxIdleConns int
+	MaxOpenConns int
 }
 
 type LoggerConfig struct {
@@ -32,6 +34,7 @@ type LoggerConfig struct {
 	MaxSize    int
 	MaxBackups int
 	Level      string
+	compress   bool
 }
 
 type Config struct {
@@ -43,7 +46,7 @@ type Config struct {
 // GlobalConfig 存储配置文件全局变量
 var GlobalConfig Config
 
-func init() {
+func InitConfig() {
 	// 设置配置文件的名字
 	viper.SetConfigName("application")
 	// 设置配置文件的类型

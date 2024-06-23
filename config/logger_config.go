@@ -10,7 +10,7 @@ import (
 )
 
 /**
- * @title: logger
+ * @title: logger_config
  * @description:
  * @author: congmu
  * @date:    2024/6/22 20:01
@@ -24,19 +24,22 @@ var loggerConfig = GlobalConfig.Logger
 var GlobalLogger *zap.SugaredLogger
 
 // 初始化日志配置
-func init() {
+func InitLogger() {
 	level := zapcore.InfoLevel
 	if loggerConfig.Level == "debug" {
 		level = zapcore.DebugLevel
 	}
-	core := zapcore.NewCore(getEncoder(), zapcore.NewMultiWriteSyncer(getWriteSyncer(), zapcore.AddSync(os.Stdout)), level)
+	//core := zapcore.NewCore(getEncoder(), zapcore.NewMultiWriteSyncer(getWriteSyncer(), zapcore.AddSync(os.Stdout)), level)
+	core := zapcore.NewCore(getEncoder(), zapcore.AddSync(os.Stdout), level)
 	GlobalLogger = zap.New(core).Sugar()
 }
 
 // 对SugaredLogger配置初始化
 func getEncoder() zapcore.Encoder {
-	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig := zap.NewDevelopmentEncoderConfig()
 	encoderConfig.TimeKey = "time"
+	encoderConfig.LevelKey = "level"
+	encoderConfig.MessageKey = "msg"
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	encoderConfig.EncodeTime = func(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
 		encoder.AppendString(t.Local().Format(time.DateTime))
@@ -59,7 +62,7 @@ func getWriteSyncer() zapcore.WriteSyncer {
 		MaxAge:     loggerConfig.MaxAge,
 		MaxBackups: loggerConfig.MaxBackups,
 		LocalTime:  true,
-		Compress:   false,
+		Compress:   loggerConfig.compress,
 	}
 	return zapcore.AddSync(lumberjackSyncer)
 }

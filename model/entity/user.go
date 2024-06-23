@@ -1,5 +1,7 @@
 package entity
 
+import "gorm.io/gorm"
+
 /**
  * @title: logger
  * @description:
@@ -8,9 +10,9 @@ package entity
  * @version: 1.0
  */
 
-type user struct {
-	id       string `json:"id"`
-	username string `json:"username"`
-	password string `json:"password"`
-	image    string `json:"image"`
+type User struct {
+	gorm.Model
+	Username string `json:"username" gorm:"size:64;not null"`
+	Password string `json:"password" gorm:"size:128"`
+	Image    string `json:"image" gorm:"size:255"`
 }

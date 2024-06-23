@@ -67,12 +67,12 @@ func InitRouter() {
 	}
 
 	// 在启动监听前先打印启动日志，并加入短暂延迟
-	Logger.Info("Starting server on port %s...\n", stPort)
+	Logger.Infof("Starting server on port %s", stPort)
 	time.Sleep(100 * time.Millisecond) // 短暂延迟，给日志打印机会
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			Logger.Error("Start server listen error: %s\n", err.Error())
+			Logger.Errorf("Start server listen error: %s", err.Error())
 		}
 	}()
 
@@ -82,7 +82,7 @@ func InitRouter() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		Logger.Error("Server shutdown error: %s\n", err.Error())
+		Logger.Errorf("Server shutdown error: %s", err.Error())
 		return
 	}
 }
