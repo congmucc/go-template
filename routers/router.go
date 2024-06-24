@@ -48,7 +48,11 @@ func InitRouter() {
 	rgPublic := r.Group("/api/v1/public")
 	rgAuth := r.Group("/api/v1/")
 
-	InitBasePlatformRoutes()
+	// 初始化基础模块路由
+	initBasePlatformRoutes()
+
+	// 注册自定义验证器
+	//registryCustValidator()
 
 	// 遍历router的数组，添加到路由中
 	for _, fnRegistRoute := range gfnRoutes {
@@ -88,7 +92,24 @@ func InitRouter() {
 }
 
 // 初始化基础模块路由
-func InitBasePlatformRoutes() {
+func initBasePlatformRoutes() {
 	InitUserRoutes()
 
 }
+
+// 注册自定义验证器
+// 参考：https://gin-gonic.com/zh-cn/docs/examples/custom-validators/
+// 在本框架中请在utils/error/validate_error.go查看相应例子
+//func registryCustValidator() {
+//	// 由于这里不适合所有人，先不写 下面这个例子是判断含有bookabledate这个校验属性的属性是否是以t开头，不然就返回错误
+//	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+//		v.RegisterValidation("bookabledate", func(fl validator.FieldLevel) bool {
+//			if value, ok := fl.Field().Interface().(string); ok {
+//				if value != "" && 0 == strings.Index(value, "t") {
+//					return true
+//				}
+//			}
+//			return false
+//		})
+//	}
+//}
