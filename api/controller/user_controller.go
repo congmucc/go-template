@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"gotemplate/model/dto"
+	"gotemplate/utils/result"
 	"net/http"
 )
 
@@ -29,11 +30,5 @@ func (userController UserController) Login(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"data": map[string]any{
-			"username": userDto.Username,
-			"password": userDto.Password,
-			"msg":      "Login Success",
-		},
-	})
+	ctx.JSON(http.StatusOK, result.OK.SuccessWithData(userDto))
 }
