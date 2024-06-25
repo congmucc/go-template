@@ -2,7 +2,7 @@ package test
 
 import (
 	"fmt"
-	"gotemplate/config"
+	"gotemplate/conf"
 	"testing"
 )
 
@@ -14,7 +14,7 @@ import (
  * @version: 1.0
  */
 
-var redisTemplate = config.RedisTemplate
+var redisTemplate = conf.RedisTemplate
 
 func TestRedis(t *testing.T) {
 	redisTemplate.Set("key", "你好")

@@ -1,4 +1,4 @@
-package config
+package conf
 
 import (
 	"go.uber.org/zap"
@@ -38,4 +38,5 @@ func init() {
 	GlobalLogger = InitLogger()
 	DB = InitDB()
 	RedisTemplate = InitRedis()
+	InitController()
 }

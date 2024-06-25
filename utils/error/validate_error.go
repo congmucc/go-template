@@ -37,6 +37,7 @@ func ParseValidateError(errs validator.ValidationErrors, target interface{}) err
 	return errResult
 }
 
+// 这里自定义验证器返回自己想要设定的值。
 // 使用如下，以login为例：
 // 1. 在router中定义注册自定义验证器
 // 参考router.registryCustValidator()方法。

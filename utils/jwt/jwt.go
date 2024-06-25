@@ -1,9 +1,9 @@
-package utils
+package jwt
 
 import (
 	"errors"
 	"github.com/golang-jwt/jwt/v5"
-	"gotemplate/config"
+	"gotemplate/conf"
 	"time"
 )
 
@@ -22,7 +22,7 @@ type JwtCustClaims struct {
 	jwt.RegisteredClaims
 }
 
-var jwtConfig = config.GlobalConfig.Jwt
+var jwtConfig = conf.GlobalConfig.Jwt
 
 func GenerateToken(id int, name string) (string, error) {
 	iJwtCustClaims := JwtCustClaims{

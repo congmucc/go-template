@@ -1,4 +1,4 @@
-package config
+package conf
 
 import (
 	"fmt"
@@ -74,7 +74,7 @@ func InitConfig() Config {
 	// 添加配置文件的路径
 	viper.AddConfigPath(configPath)
 	if err := viper.ReadInConfig(); err != nil {
-		panic(fmt.Sprint("Error reading config file: %s", err.Error()))
+		panic(fmt.Sprint("Error reading conf file: %s", err.Error()))
 	}
 	// 将配置文件内容解析到结构体中
 	var config Config

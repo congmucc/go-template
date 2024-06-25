@@ -1,7 +1,7 @@
 package test
 
 import (
-	"gotemplate/config"
+	"gotemplate/conf"
 	"testing"
 )
 
@@ -13,7 +13,7 @@ import (
  * @version: 1.0
  */
 
-var zLogger = config.GlobalLogger
+var zLogger = conf.GlobalLogger
 
 // 这只是测试如何使用，以及输出日志结构，这个log包整个可以删除
 func TestInitLogger(t *testing.T) {

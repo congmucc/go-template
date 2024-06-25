@@ -1,7 +1,7 @@
 package test
 
 import (
-	"gotemplate/utils"
+	"gotemplate/utils/jwt"
 	"testing"
 )
 
@@ -14,12 +14,12 @@ import (
  */
 
 func TestToken(t *testing.T) {
-	token, err := utils.GenerateToken(1, "congmu")
+	token, err := jwt.GenerateToken(1, "congmu")
 	if err != nil {
 		t.Error(err)
 	}
 	t.Log(token)
-	claims, err := utils.ParseToken(token)
+	claims, err := jwt.ParseToken(token)
 	if err != nil {
 		t.Error(err)
 	}

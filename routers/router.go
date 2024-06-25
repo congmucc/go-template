@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"gotemplate/config"
+	"gotemplate/conf"
 	"net/http"
 	"os/signal"
 	"syscall"
@@ -25,7 +25,7 @@ type IFnRegistRoute = func(rgPublic *gin.RouterGroup, rgAuth *gin.RouterGroup)
 // 定义一个切片存储所有路由
 var (
 	gfnRoutes []IFnRegistRoute
-	zLogger   = config.GlobalLogger
+	zLogger   = conf.GlobalLogger
 )
 
 // 注册路由，向切片中添加路由
@@ -60,7 +60,7 @@ func InitRouter() {
 	}
 
 	// 对端口进行监听
-	stPort := config.GlobalConfig.Server.Port
+	stPort := conf.GlobalConfig.Server.Port
 	if stPort == "" {
 		panic(fmt.Sprint("Load Router Port Error"))
 	}
