@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"gotemplate/api/middleware"
 	"gotemplate/conf"
 	"net/http"
 	"os/signal"
@@ -44,6 +45,8 @@ func InitRouter() {
 	defer cancelCtx()
 
 	r := gin.Default()
+
+	r.Use(middleware.Cors())
 
 	rgPublic := r.Group("/api/v1/public")
 	rgAuth := r.Group("/api/v1/")

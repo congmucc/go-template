@@ -18,7 +18,7 @@ func InitUserRoutes() {
 	RegistRoute(func(rgPublic *gin.RouterGroup, rgAuth *gin.RouterGroup) {
 		userGroup := rgPublic.Group("user")
 		{
-			userGroup.POST("/login", controller.GetUserController().Login)
+			userGroup.POST("/login", controller.NewUserController().Login)
 		}
 
 		rgAuthUser := rgAuth.Group("user")

@@ -38,5 +38,4 @@ func init() {
 	GlobalLogger = InitLogger()
 	DB = InitDB()
 	RedisTemplate = InitRedis()
-	InitController()
 }

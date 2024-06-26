@@ -17,14 +17,14 @@ import (
 
 // 如果这里是
 type JwtCustClaims struct {
-	ID   int
+	ID   uint
 	Name string
 	jwt.RegisteredClaims
 }
 
 var jwtConfig = conf.GlobalConfig.Jwt
 
-func GenerateToken(id int, name string) (string, error) {
+func GenerateToken(id uint, name string) (string, error) {
 	iJwtCustClaims := JwtCustClaims{
 		ID:   id,
 		Name: name,

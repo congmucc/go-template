@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gotemplate/model/dto"
 	"gotemplate/service"
+	"gotemplate/utils/jwt"
 	"gotemplate/utils/result"
 	"net/http"
 )
@@ -26,11 +27,7 @@ func NewUserController() *UserController {
 	}
 }
 
-func GetUserController() UserController {
-	return UserController{}
-}
-
-func (user UserController) Login(ctx *gin.Context) {
+func (user *UserController) Login(ctx *gin.Context) {
 	var userDto dto.UserDto
 	if err := ctx.ShouldBindJSON(&userDto); err != nil {
 		// 这里面可以做一个简易的自定义错误链
@@ -38,11 +35,16 @@ func (user UserController) Login(ctx *gin.Context) {
 		return
 	}
 
+	//login, err := service.NewUserService().UserLogin(ctx, userDto)
 	login, err := user.UserService.UserLogin(ctx, userDto)
+
 	if err != nil {
 		ctx.JSON(http.StatusOK, result.ERR.ErrorWithMessage(err.Error()))
 		return
 	}
+	token, err := jwt.GenerateToken(login.ID, login.Username)
 
-	ctx.JSON(http.StatusOK, result.OK.SuccessWithData(login))
+	tokenMap := make(map[string]string)
+	tokenMap["token"] = token
+	ctx.JSON(http.StatusOK, result.OK.SuccessWithData(tokenMap))
 }

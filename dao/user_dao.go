@@ -6,8 +6,6 @@ import (
 	"gotemplate/model/entity"
 )
 
-var userDao *UserDao
-
 type UserDao struct {
 	BaseDao
 }
