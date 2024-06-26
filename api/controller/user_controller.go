@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gotemplate/model/dto"
 	"gotemplate/service"
+	"gotemplate/utils"
 	"gotemplate/utils/jwt"
 	"gotemplate/utils/result"
 	"net/http"
@@ -47,4 +48,19 @@ func (user *UserController) Login(ctx *gin.Context) {
 	tokenMap := make(map[string]string)
 	tokenMap["token"] = token
 	ctx.JSON(http.StatusOK, result.OK.SuccessWithData(tokenMap))
+}
+
+func (user *UserController) GetPage(c *gin.Context) {
+	var pageRequest utils.PageRequest
+	if err := c.ShouldBindJSON(&pageRequest); err != nil {
+		c.JSON(http.StatusOK, result.ERR.ErrorWithMessage("传输信息错误"))
+	}
+
+	userList, err := user.UserService.GetPage(c, pageRequest)
+
+	if err != nil {
+		c.JSON(http.StatusOK, result.ERR.ErrorWithMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, result.OK.SuccessWithData(userList))
 }

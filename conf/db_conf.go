@@ -21,7 +21,7 @@ import (
  * @version: 1.0
  */
 
-// 不需要手动关闭，因为gorm会自动关闭
+// 不需要手动关闭，因为gorm会自动关闭，详情可以看gorm官方文档
 func InitDB() *gorm.DB {
 	logLevel := logger.Info
 	if viper.GetString("profiles.active") == "dev" {

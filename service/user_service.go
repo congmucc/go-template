@@ -6,6 +6,7 @@ import (
 	"gotemplate/dao"
 	"gotemplate/model/dto"
 	"gotemplate/model/entity"
+	"gotemplate/utils"
 )
 
 /**
@@ -18,11 +19,12 @@ import (
 
 var zLogger = conf.GlobalLogger
 
-type IUserService interface {
-	UserLogin(ctx context.Context, userDto dto.UserDto)
-}
+// userService 结构体实现UserService接口 参考go-micro这种类型的接口，这个方式可以学一下
+//type UserService interface {
+//	UserLogin(ctx context.Context, userDto dto.UserDto) (entity.User, error)
+//	GetPage(ctx context.Context) (user []entity.User, err error)
+//}
 
-// userService 结构体实现UserService接口
 type UserService struct {
 	Dao *dao.UserDao
 }
@@ -41,4 +43,12 @@ func (u *UserService) UserLogin(ctx context.Context, userDto dto.UserDto) (entit
 		zLogger.Errorf("user login error: %v", err)
 	}
 	return login, err
+}
+
+func (u *UserService) GetPage(c context.Context, pageDto utils.PageRequest) (utils.Page[dto.UserDto], error) {
+	userList, err := u.Dao.GetPage(c, pageDto)
+	if err != nil {
+		zLogger.Errorf("user get page error: %v", err)
+	}
+	return userList, err
 }

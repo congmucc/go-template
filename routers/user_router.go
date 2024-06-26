@@ -19,10 +19,11 @@ func InitUserRoutes() {
 		userGroup := rgPublic.Group("user")
 		{
 			userGroup.POST("/login", controller.NewUserController().Login)
+			userGroup.POST("/page", controller.NewUserController().GetPage)
 		}
 
 		rgAuthUser := rgAuth.Group("user")
-		rgAuthUser.GET("", func(ctx *gin.Context) {
+		rgAuthUser.GET("/all", func(ctx *gin.Context) {
 			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{
 				"data": []map[string]any{
 					{"id": 1, "username": "zs"},
