@@ -20,7 +20,7 @@ func NewUserDao() *UserDao {
 // 获取用户名和密码
 func (u *UserDao) GetUserByNameAndPassword(ctx context.Context, userDto dto.UserDto) (entity.User, error) {
 	var iUser entity.User
-	err := u.Where("username = ? and password = ?", userDto.Username, userDto.Password).Find(&iUser)
+	err := u.Model(&entity.User{}).Where("username = ? and password = ?", userDto.Username, userDto.Password).Find(&iUser)
 	return iUser, err.Error
 }
 
@@ -32,5 +32,4 @@ func (u *UserDao) GetPage(ctx context.Context, pageDto utils.PageRequest) (utils
 		Find(&userList.Data).
 		Offset(-1).Limit(-1).Count(&userList.Total)
 	return userList, nil
-
 }

@@ -23,12 +23,16 @@ func InitUserRoutes() {
 		}
 
 		rgAuthUser := rgAuth.Group("user")
-		rgAuthUser.GET("/all", func(ctx *gin.Context) {
-			ctx.AbortWithStatusJSON(http.StatusOK, gin.H{
-				"data": []map[string]any{
-					{"id": 1, "username": "zs"},
-				},
+		{
+			rgAuthUser.GET("/all", func(ctx *gin.Context) {
+				ctx.AbortWithStatusJSON(http.StatusOK, gin.H{
+					"data": []map[string]any{
+						{"id": 1, "username": "zs"},
+					},
+				})
 			})
-		})
+
+		}
+
 	})
 }
